@@ -24,7 +24,7 @@ public class ConcurrencyTests
         Assert.Equal(expected, Concurrency.Index);
     }
     
-    [Fact]
+    [Fact(Skip = "Undetermined behaviour")]
     public void FiveThreads_100Iterations_RaceIsHardToReproduce()
     {
         var expected = Concurrency.Increment(5, 1000);
@@ -63,7 +63,7 @@ public class ConcurrencyTests
         _toh.WriteLine($"Expected: {expected}; Actual: {Concurrency.Index}");
     }
 
-    [Fact]
+    [Fact(Skip = "Undetermined behaviour")]
     public void EightThreads_100KIterations_InterlockedIsFasterThanLock_Or_IsIt()
     {
         var isM1Mac = OperatingSystem.IsMacOS() &&
