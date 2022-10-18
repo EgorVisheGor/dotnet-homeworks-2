@@ -1,3 +1,2 @@
 ﻿open System
-
-(NotImplementedException() |> raise)       
+open Hw5
