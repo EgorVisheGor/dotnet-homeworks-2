@@ -21,7 +21,7 @@ let multiply = "*"
 let divide = "/"
 
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
-let inline calculate value1 operation value2: 'a =
+let inline calculate value1 operation value2 =
     match operation with
     | CalculatorOperation.Plus -> value1 + value2
     | CalculatorOperation.Minus -> value1 - value2
