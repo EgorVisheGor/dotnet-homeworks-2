@@ -58,6 +58,7 @@ public class CalculatorTests
     [Theory]
     [InlineData(1, 2, 0.5)]
     [InlineData(-5, 2, -2.5)]
+
     public void Divide_TwoNumbers_ReturnQuotient(double val1, double val2, double expResult)
     {
         //arrange
@@ -77,5 +78,14 @@ public class CalculatorTests
 
         //act + assert
         Assert.Throws<InvalidOperationException>(() => { calculator.Divide(1, 0); });
+    }
+    
+    [Fact]
+    public void UnknownOperation_ThrowsInvalidArgumentException()
+    {
+        ICalculator calculator = new CalculatorImpl();
+
+        //act + assert
+        Assert.Throws<ArgumentException>(() => { calculator.Calculate(1, Operation.Invalid, 0); });
     }
 }
