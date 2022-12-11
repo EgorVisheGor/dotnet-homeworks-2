@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Hw8.Calculator;
+using Hw8.Implementation;
+using Hw8.Interfaces;
 
 namespace Hw8;
 
@@ -11,6 +13,8 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddControllersWithViews();
+        builder.Services.AddSingleton<ICalculator, CalculatorImpl>();
+        builder.Services.AddSingleton<IParser, ParserImpl>();
 
         var app = builder.Build();
 
