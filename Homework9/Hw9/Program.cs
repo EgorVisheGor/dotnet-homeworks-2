@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Hw9.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +29,7 @@ app.Run();
 
 namespace Hw9
 {
-    [ExcludeFromCodeCoverage]
-    public partial class Program { }
+    public partial class Program
+    {
+    }
 }

@@ -4,79 +4,77 @@ using Hw9.ErrorMessages;
 
 namespace Hw9;
 
-public class RecursiveDescentParser
+public class ExpressionParser
 {
     private readonly string[] _operations = {"+", "-", "*", "/"};
 
     private readonly string[]? _tokens;
     private int _position;
-    private readonly bool IsGoodExpression;
 
     private static readonly Regex InputSplit = new ("(?<=[−+*/\\(\\)])|(?=[−+*/\\(\\)])");
     private static readonly Regex Numbers = new("[0-9]+");
 
-    public RecursiveDescentParser(string expression)
+    public ExpressionParser(string expression)
     {
         if (string.IsNullOrWhiteSpace(expression))
             throw new NullReferenceException(MathErrorMessager.EmptyString);
-        IsGoodExpression = true;
-            _tokens = InputSplit.Split(expression)
+        _tokens = InputSplit.Split(expression)
                 .SelectMany(str => str.Split(' ', StringSplitOptions.RemoveEmptyEntries))
                 .ToArray();
     }
 
     public Expression Parse() 
     {
-        var result = Expression();
-        if (_position == _tokens?.Length || !IsGoodExpression) return result;
+        var result = PlusOrMinus();
+        if (_position == _tokens?.Length) return result;
         var message = _tokens?[_position] == ")" ? MathErrorMessager.IncorrectBracketsNumber : 
             MathErrorMessager.UnknownCharacterMessage(_tokens![_position].ToCharArray()[0]);
         throw new ArgumentException(message);
     }
 
-    private Expression Expression() 
+    private Expression PlusOrMinus() 
     {
-        var firstExpression= Term();
+        var firstExpression= MultiplyOrDivide();
         while (_position < _tokens?.Length)
         {
             var token = _tokens[_position];
             if (!token.Equals("+") && !token.Equals("-")) break;
             _position++;
-            var secondExpression = Term();
+            var secondExpression = MultiplyOrDivide();
             firstExpression = token.Equals("+")
-                    ? System.Linq.Expressions.Expression.Add(firstExpression, secondExpression)
-                    : System.Linq.Expressions.Expression.Subtract(firstExpression, secondExpression);
+                    ? Expression.Add(firstExpression, secondExpression)
+                    : Expression.Subtract(firstExpression, secondExpression);
         }
 
         return firstExpression;
     }
 
 
-    private Expression Term() 
+    private Expression MultiplyOrDivide() 
     {
-        var firstExpression = Factor();
+        var firstExpression = Brackets();
         while (_position < _tokens?.Length) 
         {
             var token = _tokens[_position];
             if (!token.Equals("*") && !token.Equals("/")) break;
             _position++;
-            var secondExpression = Factor();
+            var secondExpression = Brackets();
             firstExpression = token.Equals("*")
-                    ? System.Linq.Expressions.Expression.Multiply(firstExpression, secondExpression)
-                    : System.Linq.Expressions.Expression.Divide(firstExpression, secondExpression);
+                    ? Expression.Multiply(firstExpression, secondExpression)
+                    : Expression.Divide(firstExpression, secondExpression);
         }
 
         return firstExpression;
     }
 
-    private Expression Factor() 
+    private Expression Brackets() 
     {
         var next = _position < _tokens?.Length ? _tokens[_position] : string.Empty;
         var previous = _position - 1 >= 0 ? _tokens?[_position - 1] : string.Empty;
         if (next.Equals("(")) {
             _position++;
-            var result = Expression();
-            if (_position >= _tokens?.Length)//Если войдёт дважды в рекурсию и не будет закрывающих скобок, то ошибка
+            var result = PlusOrMinus();
+            if (_position >= _tokens?.Length)
                 throw new ArgumentException(MathErrorMessager.IncorrectBracketsNumber);
 
             _position++;
@@ -91,7 +89,7 @@ public class RecursiveDescentParser
         if (double.TryParse(next, out var res))
         {
             _position++;
-            return System.Linq.Expressions.Expression.Constant(res);
+            return Expression.Constant(res);
         }
         string message;
         if (_position == 0 && _operations.Contains(next))

@@ -6,14 +6,15 @@ public class MathCalculatorService : IMathCalculatorService
 {
     public async Task<CalculationMathExpressionResultDto> CalculateMathExpressionAsync(string? expression)
     {
-        var calculatorVisitor = new CalcVisitorImpl();
-        var expressionConverter = new ExpressionConverter();
         try
         {
-            var parser = new RecursiveDescentParser(expression);
-            var expressionTree = parser.Parse();
-            var expressionMap = expressionConverter.ExpressionDictionary(expressionTree);
-            var result = await calculatorVisitor.CalculatorVisitBinary(expressionMap);
+            var parseExpression = new ExpressionParser(expression).Parse();
+            ;
+
+            var converteExpressionDictionary = new ExpressionConverter().ExpressionDictionary(parseExpression);
+
+            var result = await new CalculatorVisitor().VisitDictionary(converteExpressionDictionary);
+
             return new CalculationMathExpressionResultDto(result);
         }
         catch (Exception e)
