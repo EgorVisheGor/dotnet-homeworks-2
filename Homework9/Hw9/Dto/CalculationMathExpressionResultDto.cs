@@ -18,8 +18,5 @@ public class CalculationMathExpressionResultDto
         Result = result;
     }
 
-    public CalculationMathExpressionResultDto()
-    {
-        
-    }
+    public CalculationMathExpressionResultDto(){}
 }
