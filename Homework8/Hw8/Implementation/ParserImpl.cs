@@ -10,7 +10,7 @@ public class ParserImpl : IParser
     public string TryParseValues(string? firstValue, string? operation, string? secondValue, out Values result)
     {
         result = new Values();
-        if (firstValue == null || operation == null || secondValue == null) return "Введены неверные данные";
+        if (firstValue == null || operation == null || secondValue == null) return Messages.InvalidArgumentsMessage;
 
         if (!Double.TryParse(firstValue, NumberStyles.AllowDecimalPoint, NumberFormatInfo.InvariantInfo, out var val1)
             || !Double.TryParse(secondValue, NumberStyles.AllowDecimalPoint, NumberFormatInfo.InvariantInfo,

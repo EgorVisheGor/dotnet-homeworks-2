@@ -31,7 +31,7 @@ public class CalculatorController : Controller
             InvalidNumberMessage => BadRequest(InvalidNumberMessage),
             InvalidOperationMessage => BadRequest(InvalidOperationMessage),
             DivisionByZeroMessage => BadRequest(DivisionByZeroMessage),
-            InvalidArgumentsMessage => BadRequest(InvalidArgumentsMessage)
+           _ => BadRequest(InvalidArgumentsMessage)
         };
     }
     
