@@ -8,14 +8,10 @@ public class MathCalculatorService : IMathCalculatorService
     {
         try
         {
-            var parseExpression = new ExpressionParser(expression).Parse();
-            ;
-
-            var converteExpressionDictionary = new ExpressionConverter().ExpressionDictionary(parseExpression);
-
-            var result = await new CalculatorVisitor().VisitDictionary(converteExpressionDictionary);
-
-            return new CalculationMathExpressionResultDto(result);
+            var postfix = PostfixParser.ConvertToPostfix(expression);
+            var expressionTree = ExpressionTree.GenerateExpressionTree(postfix);
+            var treeVisited = await new ExpressionTreeVisitor().VisitAsync(expressionTree);
+            return new CalculationMathExpressionResultDto(treeVisited);
         }
         catch (Exception e)
         {

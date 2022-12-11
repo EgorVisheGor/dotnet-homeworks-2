@@ -12,6 +12,7 @@ public static class MathErrorMessager
     public const string TwoOperationInRow = "There are two operations in a row";
     public const string InvalidOperatorAfterParenthesis = "After the opening brackets, only negation can go";
     public const string OperationBeforeParenthesis = "There is only a number before the closing parenthesis";
+    public const string WrongNotationForANegativeNumber = "Wrong notation for a negative number";
 
     public static string NotNumberMessage(string num) =>
         $"{NotNumber} {num}";
