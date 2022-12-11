@@ -31,8 +31,8 @@ public class IntegrationTests: IClassFixture<WebApplicationFactory<Program>>
     [Theory]
     [InlineData("a", Operation.Plus, "4", Messages.InvalidNumberMessage)]
     [InlineData("1000", Operation.Minus, "b",  Messages.InvalidNumberMessage)]
-    [InlineData("63", Operation.Invalid, "3", Messages.InvalidOperationMessage)]
     [InlineData("63", Operation.Divide, "0", Messages.DivisionByZeroMessage)]
+    [InlineData("63",Operation.Invalid,"12",Messages.InvalidArgumentsMessage)]
     public async Task Calculate_IncorrectArguments_ExceptionStringReturned(string val1, Operation operation, string val2, string expected)
     {
         var response = await _client.GetAsync($"{_url}/Calculator/Calculate?val1={val1}&operation={operation}&val2={val2}");

@@ -17,11 +17,12 @@ public class ParserImpl : IParser
                 out var val2))
             return Messages.InvalidNumberMessage;
         
-        if (!Enum.TryParse<Operation>(operation, out var op) || op == Operation.Invalid)
+        if (!Enum.TryParse<Operation>(operation, out var op))
             return Messages.InvalidOperationMessage;
 
+        if (op == Operation.Invalid) return Messages.InvalidArgumentsMessage;
 
-        if (val2 == 0 && op == Operation.Divide) return Messages.DivisionByZeroMessage;
+            if (val2 == 0 && op == Operation.Divide) return Messages.DivisionByZeroMessage;
             
             result = new Values { firstValue = val1, operation = op, secondValue = val2 };
         return "OK";
