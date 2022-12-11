@@ -30,8 +30,7 @@ public class CalculatorController : Controller
             "OK" => calculator.Calculate(result.firstValue, result.operation, result.secondValue),
             InvalidNumberMessage => BadRequest(InvalidNumberMessage),
             InvalidOperationMessage => BadRequest(InvalidOperationMessage),
-            DivisionByZeroMessage => BadRequest(DivisionByZeroMessage),
-            InvalidArgumentsMessage => BadRequest(InvalidArgumentsMessage)
+            DivisionByZeroMessage => BadRequest(DivisionByZeroMessage)
         };
     }
     
