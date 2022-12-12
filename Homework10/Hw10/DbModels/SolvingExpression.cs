@@ -13,4 +13,5 @@ public class SolvingExpression
 
 	[Required] 
 	public double Result { get; set; }
+	
 }
