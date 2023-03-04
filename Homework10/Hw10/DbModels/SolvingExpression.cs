@@ -6,6 +6,12 @@ namespace Hw10.DbModels;
 [ExcludeFromCodeCoverage]
 public class SolvingExpression
 {
+	public SolvingExpression(string expression, double result)
+	{
+		Expression = expression;
+		Result = result;
+	}
+
 	public int SolvingExpressionId { get; set; }
 		
 	[Required] 
